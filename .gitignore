@@ -1,0 +1,4 @@
+
+.*/*
+target/*
+reduced-dependency-pom.xml
