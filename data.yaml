@@ -1,0 +1,30 @@
+int: 121
+float: 10.32
+long: 1723612312127267231
+double: 97312.12732e+300
+map:
+  list:
+    - map:
+        string: "shdfag"
+        anotherString: 1623jsa
+    - whaterver: shdas
+      letever: 826
+    - 1283
+    - hsgda
+    - true
+    - ~
+    - listimagic:
+        - 236
+        - nop
+        - null
+    - {}
+    - []
+  mapInAMap:
+    inAmap: 
+      map: 
+        val: sudtgd
+      thingi: nsd
+    magic: bsyd
+  s: diym
+  hs: {}
+  sh: []
