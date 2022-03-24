@@ -30,7 +30,7 @@
       <artifactId>snakeyaml</artifactId>
       <version>1.30</version>
     </dependency>
-	<dependency>
+  	<dependency>
       <groupId>me.sepdron</groupId>
       <artifactId>utils</artifactId>
       <version>1.0-SNAPSHOT</version>
