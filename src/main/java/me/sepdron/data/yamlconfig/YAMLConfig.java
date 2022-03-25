@@ -89,6 +89,12 @@ public class YAMLConfig {
 	public String getPath() {
 		return path;
 	}
+	public Map<String, Object> getMapValues() {
+		return mapValues;
+	}
+	public List<Object> getListValues() {
+		return listValues;
+	}
 
 	public boolean isMap() {
 		return isMap;
