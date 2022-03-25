@@ -18,14 +18,20 @@ public class YAMLConfig {
 
 	private Map<String, Object> mapValues;
 	private List<Object> listValues;
+	private final boolean isMap;
+	private final boolean isList;
 
 	public YAMLConfig(Map<?, ?> map) {
 		mapValues = new HashMap<String, Object>(CollectionUtils.getMapAs(map, String.class, Object.class));
 		mapValues.replaceAll((key, value) -> convert(value));
+		isMap = true;
+		isList = false;
 	}
 	public YAMLConfig(List<?> map) {
 		listValues = new ArrayList<Object>(CollectionUtils.getListAs(map, Object.class));
 		listValues.replaceAll((value) -> convert(value));
+		isMap = false;
+		isList = true;
 	}
 
 	private static Object convert(Object obj) {
@@ -48,4 +54,10 @@ public class YAMLConfig {
 		}
 	}
 
+	public boolean isMap() {
+		return isMap;
+	}
+	public boolean isList() {
+		return isList;
+	}
 }
