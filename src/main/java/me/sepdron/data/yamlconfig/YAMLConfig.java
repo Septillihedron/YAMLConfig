@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +26,7 @@ public class YAMLConfig {
 		this.parent = parent;
 		this.path = path;
 
-		mapValues = new HashMap<String, Object>(CollectionUtils.getMapAs(data, String.class, Object.class));
+		mapValues = CollectionUtils.getMapAs(data, String.class, Object.class);
 		mapValues.replaceAll((key, value) -> convert(key, value));
 		isMap = true;
 		isList = false;
@@ -37,7 +35,7 @@ public class YAMLConfig {
 		this.parent = parent;
 		this.path = path;
 
-		listValues = new ArrayList<Object>(CollectionUtils.getListAs(data, Object.class));
+		listValues = CollectionUtils.getListAs(data, Object.class);
 		for (int i=0; i<listValues.size(); i++) {
 			listValues.set(i, convert(i, listValues.get(i)));
 		}
