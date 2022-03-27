@@ -18,9 +18,9 @@
   
   <distributionManagement>
     <repository>
-      <id>github</id>
+      <id>github-YAMLConfig</id>
       <name>Github Septillihedron Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/Septillihedron/YamlConfig</url>
+      <url>https://maven.pkg.github.com/Septillihedron/YAMLConfig</url>
     </repository>
   </distributionManagement>
 
