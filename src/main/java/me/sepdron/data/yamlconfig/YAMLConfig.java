@@ -120,15 +120,15 @@ public class YAMLConfig {
 		return mapValues.get(key);
 	}
 	public Object getObject(int index) throws WrongMappingException {
-		if (!isList) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
+		if (!isList) throw WrongMappingException.NOT_A_LIST_EXCEPTION;
 		return inRange(index)? listValues.get(index) : null;
 	}
 	public Object getObject(int index, Object defaultValue) throws WrongMappingException {
-		if (!isList) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
+		if (!isList) throw WrongMappingException.NOT_A_LIST_EXCEPTION;
 		return inRange(index)? listValues.get(index) : defaultValue;
 	}
 	public Object getObject(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
-		if (!isList) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
+		if (!isList) throw WrongMappingException.NOT_A_LIST_EXCEPTION;
 		if (required && !inRange(index)) 
 			throw NoneOfTypeException.createNotExistException(getPathOf(index));
 		return inRange(index)? listValues.get(index) : null;
