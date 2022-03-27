@@ -101,6 +101,10 @@ public class YAMLConfig {
 		return isList;
 	}
 
+	private boolean inRange(int index) {
+		return (index >= 0 && index < listValues.size());
+	}
+
 	public Object getObject(String key) throws WrongMappingException {
 		if (!isMap) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
 		return mapValues.get(key);
@@ -117,17 +121,17 @@ public class YAMLConfig {
 	}
 	public Object getObject(int index) throws WrongMappingException {
 		if (!isList) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
-		return (index < listValues.size())? listValues.get(index) : null;
+		return inRange(index)? listValues.get(index) : null;
 	}
 	public Object getObject(int index, Object defaultValue) throws WrongMappingException {
 		if (!isList) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
-		return (index < listValues.size())? listValues.get(index) : defaultValue;
+		return inRange(index)? listValues.get(index) : defaultValue;
 	}
 	public Object getObject(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
 		if (!isList) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
-		if (required && !(index < listValues.size())) 
+		if (required && !inRange(index)) 
 			throw NoneOfTypeException.createNotExistException(getPathOf(index));
-		return (index < listValues.size())? listValues.get(index) : null;
+		return inRange(index)? listValues.get(index) : null;
 	}
 
 }
