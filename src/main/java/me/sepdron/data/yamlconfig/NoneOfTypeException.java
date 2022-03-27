@@ -11,15 +11,15 @@ public class NoneOfTypeException extends RuntimeException {
 		return new NoneOfTypeException(message);
 	}
 	protected static NoneOfTypeException createTypeException(String path, String type) {
-		String message = String.format("%s does not exist or has type other than %s", path, type);
+		String message = String.format("%s has type other than %s", path, type);
 		return new NoneOfTypeException(message);
 	}
 	protected static NoneOfTypeException createMapException(String path) {
-		String message = String.format("%s does not exist or is not a section", path);
+		String message = String.format("%s is not a section", path);
 		return new NoneOfTypeException(message);
 	}
 	protected static NoneOfTypeException createListException(String path) {
-		String message = String.format("%s does not exist or is not a list", path);
+		String message = String.format("%s is not a list", path);
 		return new NoneOfTypeException(message);
 	}
 }
