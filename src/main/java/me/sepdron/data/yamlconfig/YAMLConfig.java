@@ -100,4 +100,34 @@ public class YAMLConfig {
 	public boolean isList() {
 		return isList;
 	}
+
+	public Object getObject(String key) throws WrongMappingException {
+		if (!isMap) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
+		return mapValues.get(key);
+	}
+	public Object getObject(String key, Object defaultValue) throws WrongMappingException {
+		if (!isMap) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
+		return mapValues.getOrDefault(key, defaultValue);
+	}
+	public Object getObject(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
+		if (!isMap) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
+		if (required && !mapValues.containsKey(key)) 
+			throw NoneOfTypeException.createNotExistException(getPathOf(key));
+		return mapValues.get(key);
+	}
+	public Object getObject(int index) throws WrongMappingException {
+		if (!isList) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
+		return (index < listValues.size())? listValues.get(index) : null;
+	}
+	public Object getObject(int index, Object defaultValue) throws WrongMappingException {
+		if (!isList) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
+		return (index < listValues.size())? listValues.get(index) : defaultValue;
+	}
+	public Object getObject(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
+		if (!isList) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
+		if (required && !(index < listValues.size())) 
+			throw NoneOfTypeException.createNotExistException(getPathOf(index));
+		return (index < listValues.size())? listValues.get(index) : null;
+	}
+
 }
