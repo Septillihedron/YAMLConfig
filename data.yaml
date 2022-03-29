@@ -20,6 +20,8 @@ map:
         - null
     - {}
     - []
+    - 121.18271
+    - 1723612312127267231
   mapInAMap:
     inAmap: 
       map: 
