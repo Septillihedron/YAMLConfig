@@ -2,6 +2,7 @@ int: 121
 float: 10.32
 long: 1723612312127267231
 double: 97312.12732e+300
+string: sydtshya6+128
 map:
   list:
     - map:

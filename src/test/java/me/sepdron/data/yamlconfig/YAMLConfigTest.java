@@ -46,8 +46,6 @@ public class YAMLConfigTest {
 		assertThrows(NoneOfTypeException.class, () -> topConfig.getObject("hyd", true));
 	}
 
-
-
 	@Test
 	void listMapping_getObject_String_Test() {
 		assertEquals((Integer) listConfig.getObject(2), 1283);
@@ -71,6 +69,49 @@ public class YAMLConfigTest {
 		assertThrows(NoneOfTypeException.class, () -> listConfig.getObject(-19, true));
 	}
 
+	@Test
+	void mapMapping_getString_String_Test() {
+		assertEquals(topConfig.getString("string"), "sydtshya6+128");
+		assertNull(topConfig.getString("hyd"));
+		assertNull(topConfig.getString("int"));
+	}
+	@Test
+	void mapMapping_getString_String_String_Test() {
+		assertEquals(topConfig.getString("string", "aaa"), "sydtshya6+128");
+		assertEquals(topConfig.getString("hyd", "aaa"), "aaa");
+		assertEquals(topConfig.getString("int", "aaa"), "aaa");
+	}
+	@Test
+	void mapMapping_getString_String_boolean_Test() {
+		assertEquals(topConfig.getString("string", false), "sydtshya6+128");
+		assertDoesNotThrow(() -> topConfig.getString("hyd", false));
+		assertDoesNotThrow(() -> topConfig.getString("int", false));
+		assertEquals(topConfig.getString("string", true), "sydtshya6+128");
+		assertThrows(NoneOfTypeException.class, () -> topConfig.getString("hyd", true));
+		assertThrows(NoneOfTypeException.class, () -> topConfig.getString("int", true));
+	}
+
+	@Test
+	void listMapping_getString_String_Test() {
+		assertEquals(listConfig.getString(3), "hsgda");
+		assertNull(listConfig.getString(72));
+		assertNull(listConfig.getString(2));
+	}
+	@Test
+	void listMapping_getString_String_String_Test() {
+		assertEquals(listConfig.getString(3, "aaa"), "hsgda");
+		assertEquals(listConfig.getString(72, "aaa"), "aaa");
+		assertEquals(listConfig.getString(2, "aaa"), "aaa");
+	}
+	@Test
+	void listMapping_getString_String_boolean_Test() {
+		assertEquals(listConfig.getString(3, false), "hsgda");
+		assertDoesNotThrow(() -> listConfig.getString(72, false));
+		assertDoesNotThrow(() -> listConfig.getString(2, false));
+		assertEquals(listConfig.getString(3, true), "hsgda");
+		assertThrows(NoneOfTypeException.class, () -> listConfig.getString(72, true));
+		assertThrows(NoneOfTypeException.class, () -> listConfig.getString(2, true));
+	}
 
 	public static void assertThrowsException(Throwable exception, Executable executable) {
 		try {
