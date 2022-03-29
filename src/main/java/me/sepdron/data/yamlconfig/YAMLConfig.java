@@ -134,4 +134,39 @@ public class YAMLConfig {
 		return inRange(index)? listValues.get(index) : null;
 	}
 
+	public String getString(String key) throws WrongMappingException {
+		Object o = getObject(key);
+		if (o instanceof String) {
+			return (String) o;
+		}
+		return null;
+	}
+	public String getString(String key, String defaultValue) throws WrongMappingException {
+		Object o = getObject(key);
+		if (o instanceof String) return (String) o;
+		return defaultValue;
+	}
+	public String getString(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(key, required);
+		if (o instanceof String) return (String) o;
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(key), "String");
+		return null;
+	}
+	public String getString(int index) throws WrongMappingException {
+		Object o = getObject(index);
+		if (o instanceof String) return (String) o;
+		return null;
+	}
+	public String getString(int index, String defaultValue) throws WrongMappingException {
+		Object o = getObject(index);
+		if (o instanceof String) return (String) o;
+		return defaultValue;
+	}
+	public String getString(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(index, required);
+		if (o instanceof String) return (String) o;
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "String");
+		return null;
+	}
+
 }
