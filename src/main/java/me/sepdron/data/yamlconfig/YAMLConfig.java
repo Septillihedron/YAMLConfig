@@ -324,4 +324,40 @@ public class YAMLConfig {
 		return 0;
 	}
 
+	private double toDouble(Object o) {
+		return ((Number) o).doubleValue();
+	}
+	public double getDouble(String key) throws WrongMappingException {
+		Object o = getObject(key);
+		if (isFloatingPoint(o)) return toDouble(o);
+		return 0;
+	}
+	public double getDouble(String key, double defaultValue) throws WrongMappingException {
+		Object o = getObject(key);
+		if (isFloatingPoint(o)) return toDouble(o);
+		return defaultValue;
+	}
+	public double getDouble(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(key, required);
+		if (isFloatingPoint(o)) return toDouble(o);
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(key), "double");
+		return 0;
+	}
+	public double getDouble(int index) throws WrongMappingException {
+		Object o = getObject(index);
+		if (isFloatingPoint(o)) return toDouble(o);
+		return 0;
+	}
+	public double getDouble(int index, double defaultValue) throws WrongMappingException {
+		Object o = getObject(index);
+		if (isFloatingPoint(o)) return toDouble(o);
+		return defaultValue;
+	}
+	public double getDouble(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(index, required);
+		if (isFloatingPoint(o)) return toDouble(o);
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "double");
+		return 0;
+	}
+
 }

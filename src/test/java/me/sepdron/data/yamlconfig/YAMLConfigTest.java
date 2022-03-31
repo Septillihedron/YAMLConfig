@@ -614,7 +614,6 @@ public class YAMLConfigTest {
 		assertThrows(exceptionClass, () -> listConfig.getBigInteger(726, true));  // out of bounds
 	}
 
-
 	@Test
 	void mapMapping_getFloat_String_Test() {
 		assertEquals(topConfig.getFloat("hyd"       ),         0);
@@ -717,6 +716,107 @@ public class YAMLConfigTest {
 		assertThrows(exceptionClass, () -> listConfig.getFloat(726, true));  // out of bounds
 	}
 
+	@Test
+	void mapMapping_getDouble_String_Test() {
+		assertEquals(topConfig.getDouble("hyd"       ), 0);
+		assertEquals(topConfig.getDouble("int"       ), map_int);
+		assertEquals(topConfig.getDouble("long"      ), map_long);
+		assertEquals(topConfig.getDouble("bigInteger"), map_bigInteger.doubleValue());
+		assertEquals(topConfig.getDouble("float"     ), map_float);
+		assertEquals(topConfig.getDouble("double"    ), map_double);
+		assertEquals(topConfig.getDouble("string"    ), 0);
+		assertEquals(topConfig.getDouble("nul"       ), 0);
+		assertEquals(topConfig.getDouble("boolean"   ), 0);
+	}
+	@Test
+	void mapMapping_getDouble_String_int_Test() {
+		assertEquals(topConfig.getDouble("hyd"       , -12.8), -12.8);
+		assertEquals(topConfig.getDouble("int"       , -12.8), map_int);
+		assertEquals(topConfig.getDouble("long"      , -12.8), map_long);
+		assertEquals(topConfig.getDouble("bigInteger", -12.8), map_bigInteger.doubleValue());
+		assertEquals(topConfig.getDouble("float"     , -12.8), map_float);
+		assertEquals(topConfig.getDouble("double"    , -12.8), map_double);
+		assertEquals(topConfig.getDouble("string"    , -12.8), -12.8);
+		assertEquals(topConfig.getDouble("nul"       , -12.8), -12.8);
+		assertEquals(topConfig.getDouble("boolean"   , -12.8), -12.8);
+	}
+	@Test
+	void mapMapping_getDouble_String_boolean_Test() {
+		assertEquals(topConfig.getDouble("hyd"       , false), 0);
+		assertEquals(topConfig.getDouble("int"       , false), map_int);
+		assertEquals(topConfig.getDouble("long"      , false), map_long);
+		assertEquals(topConfig.getDouble("bigInteger", false), map_bigInteger.doubleValue());
+		assertEquals(topConfig.getDouble("float"     , false), map_float);
+		assertEquals(topConfig.getDouble("double"    , false), map_double);
+		assertEquals(topConfig.getDouble("string"    , false), 0);
+		assertEquals(topConfig.getDouble("nul"       , false), 0);
+		assertEquals(topConfig.getDouble("boolean"   , false), 0);
+
+		assertEquals(topConfig.getDouble("int"       , true ), map_int);
+		assertEquals(topConfig.getDouble("long"      , true ), map_long);
+		assertEquals(topConfig.getDouble("bigInteger", true ), map_bigInteger.doubleValue());
+		assertEquals(topConfig.getDouble("float"     , true ), map_float);
+		assertEquals(topConfig.getDouble("double"    , true ), map_double);
+
+		Class<NoneOfTypeException> exceptionClass = NoneOfTypeException.class;
+		assertThrows(exceptionClass, () -> topConfig.getDouble("hyd"       , true));
+		assertThrows(exceptionClass, () -> topConfig.getDouble("string"    , true));
+		assertThrows(exceptionClass, () -> topConfig.getDouble("nul"       , true));
+		assertThrows(exceptionClass, () -> topConfig.getDouble("boolean"   , true));
+	}
+
+	@Test
+	void listMapping_getDouble_String_Test() {
+		assertEquals(listConfig.getDouble(-19), 0                   ); // out of bounds
+		assertEquals(listConfig.getDouble(0  ), list_0              ); // int
+		assertEquals(listConfig.getDouble(1  ), list_1              ); // long
+		assertEquals(listConfig.getDouble(2  ), list_2.doubleValue()); // bigInteger
+		assertEquals(listConfig.getDouble(3  ), list_3              ); // double
+		assertEquals(listConfig.getDouble(4  ), list_4              ); // double
+		assertEquals(listConfig.getDouble(5  ), 0                   ); // string
+		assertEquals(listConfig.getDouble(6  ), 0                   ); // null
+		assertEquals(listConfig.getDouble(7  ), 0                   ); // boolean
+		assertEquals(listConfig.getDouble(726), 0                   ); // out of bounds
+	}
+	@Test
+	void listMapping_getDouble_String_int_Test() {
+		assertEquals(listConfig.getDouble(-19, -12.8), -12.8               ); // out of bounds
+		assertEquals(listConfig.getDouble(0  , -12.8), list_0              ); // int
+		assertEquals(listConfig.getDouble(1  , -12.8), list_1              ); // long
+		assertEquals(listConfig.getDouble(2  , -12.8), list_2.doubleValue()); // bigInteger
+		assertEquals(listConfig.getDouble(3  , -12.8), list_3              ); // double
+		assertEquals(listConfig.getDouble(4  , -12.8), list_4              ); // double
+		assertEquals(listConfig.getDouble(5  , -12.8), -12.8               ); // string
+		assertEquals(listConfig.getDouble(6  , -12.8), -12.8               ); // null
+		assertEquals(listConfig.getDouble(7  , -12.8), -12.8               ); // boolean
+		assertEquals(listConfig.getDouble(726, -12.8), -12.8               ); // out of bounds
+	}
+	@Test
+	void listMapping_getDouble_String_boolean_Test() {
+		assertEquals(listConfig.getDouble(-19, false), 0                   ); // out of bounds
+		assertEquals(listConfig.getDouble(0  , false), list_0              ); // int
+		assertEquals(listConfig.getDouble(1  , false), list_1              ); // long
+		assertEquals(listConfig.getDouble(2  , false), list_2.doubleValue()); // bigInteger
+		assertEquals(listConfig.getDouble(3  , false), list_3              ); // double
+		assertEquals(listConfig.getDouble(4  , false), list_4              ); // double
+		assertEquals(listConfig.getDouble(5  , false), 0                   ); // string
+		assertEquals(listConfig.getDouble(6  , false), 0                   ); // null
+		assertEquals(listConfig.getDouble(7  , false), 0                   ); // boolean
+		assertEquals(listConfig.getDouble(726, false), 0                   ); // out of bounds
+
+		assertEquals(listConfig.getDouble(0  , true ), list_0              ); // int
+		assertEquals(listConfig.getDouble(1  , true ), list_1              ); // long
+		assertEquals(listConfig.getDouble(2  , true ), list_2.doubleValue()); // bigInteger
+		assertEquals(listConfig.getDouble(3  , true ), list_3              ); // double
+		assertEquals(listConfig.getDouble(4  , true ), list_4              ); // double
+
+		Class<NoneOfTypeException> exceptionClass = NoneOfTypeException.class;
+		assertThrows(exceptionClass, () -> listConfig.getDouble(-19, true));  // out of bounds
+		assertThrows(exceptionClass, () -> listConfig.getDouble(5  , true));  // string
+		assertThrows(exceptionClass, () -> listConfig.getDouble(6  , true));  // null
+		assertThrows(exceptionClass, () -> listConfig.getDouble(7  , true));  // boolean
+		assertThrows(exceptionClass, () -> listConfig.getDouble(726, true));  // out of bounds
+	}
 
 	public static void assertThrowsException(Throwable exception, Executable executable) {
 		try {
