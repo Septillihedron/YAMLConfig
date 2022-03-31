@@ -4,7 +4,7 @@ bigInteger: 17236123121272672311723612312127267231172361231212726723117236123121
 float: 10.32
 double: 97312.12732e+300
 string: sydtshya6+128
-null: null
+nul: null
 boolean: false
 map:
   int: 121
@@ -13,7 +13,7 @@ map:
   float: 10.32
   double: 97312.12732e+300
   string: sydtshya6+128
-  null: null
+  nul: null
 list:
   - -121
   - -1723612312127267231
