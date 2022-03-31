@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
@@ -231,6 +232,45 @@ public class YAMLConfig {
 		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
 		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "int");
 		return 0;
+	}
+
+	public BigInteger getBigInteger(String key) throws WrongMappingException {
+		Object o = getObject(key);
+		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		else if (o instanceof BigInteger) return (BigInteger) o;
+		return BigInteger.ZERO;
+	}
+	public BigInteger getBigInteger(String key, BigInteger defaultValue) throws WrongMappingException {
+		Object o = getObject(key);
+		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		else if (o instanceof BigInteger) return (BigInteger) o;
+		return defaultValue;
+	}
+	public BigInteger getBigInteger(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(key, required);
+		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		else if (o instanceof BigInteger) return (BigInteger) o;
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(key), "BigInteger");
+		return BigInteger.ZERO;
+	}
+	public BigInteger getBigInteger(int index) throws WrongMappingException {
+		Object o = getObject(index);
+		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		else if (o instanceof BigInteger) return (BigInteger) o;
+		return BigInteger.ZERO;
+	}
+	public BigInteger getBigInteger(int index, BigInteger defaultValue) throws WrongMappingException {
+		Object o = getObject(index);
+		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		else if (o instanceof BigInteger) return (BigInteger) o;
+		return defaultValue;
+	}
+	public BigInteger getBigInteger(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(index, required);
+		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		else if (o instanceof BigInteger) return (BigInteger) o;
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "BigInteger");
+		return BigInteger.ZERO;
 	}
 
 }
