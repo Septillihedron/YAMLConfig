@@ -55,21 +55,21 @@ public class YAMLConfigTest {
 		assertThrowsException(exception, () -> topConfig.getObject(726));
 	}
 	@Test
-	void mapMapping_getObject_String_Object_Test() {
-		assertEquals(topConfig.getObject("hyd"       , "172"), "172");
-		assertEquals(topConfig.getObject("int"       , "172"), map_int);
-		assertEquals(topConfig.getObject("long"      , "172"), map_long);
-		assertEquals(topConfig.getObject("bigInteger", "172"), map_bigInteger);
-		assertEquals(topConfig.getObject("float"     , "172"), map_float);
-		assertEquals(topConfig.getObject("double"    , "172"), map_double);
-		assertEquals(topConfig.getObject("string"    , "172"), map_string);
-		assertEquals(topConfig.getObject("nul"       , "172"), map_nul);
-		assertEquals(topConfig.getObject("boolean"   , "172"), map_boolean);
+	void mapMapping_getObjectOrDefault_String_Object_Test() {
+		assertEquals(topConfig.getObjectOrDefault("hyd"       , "172"), "172");
+		assertEquals(topConfig.getObjectOrDefault("int"       , "172"), map_int);
+		assertEquals(topConfig.getObjectOrDefault("long"      , "172"), map_long);
+		assertEquals(topConfig.getObjectOrDefault("bigInteger", "172"), map_bigInteger);
+		assertEquals(topConfig.getObjectOrDefault("float"     , "172"), map_float);
+		assertEquals(topConfig.getObjectOrDefault("double"    , "172"), map_double);
+		assertEquals(topConfig.getObjectOrDefault("string"    , "172"), map_string);
+		assertEquals(topConfig.getObjectOrDefault("nul"       , "172"), map_nul);
+		assertEquals(topConfig.getObjectOrDefault("boolean"   , "172"), map_boolean);
 
 		WrongMappingException exception = WrongMappingException.NOT_A_LIST_EXCEPTION;
-		assertThrowsException(exception, () -> topConfig.getObject(-19, "172"));
-		assertThrowsException(exception, () -> topConfig.getObject(0  , "172"));
-		assertThrowsException(exception, () -> topConfig.getObject(726, "172"));
+		assertThrowsException(exception, () -> topConfig.getObjectOrDefault(-19, "172"));
+		assertThrowsException(exception, () -> topConfig.getObjectOrDefault(0  , "172"));
+		assertThrowsException(exception, () -> topConfig.getObjectOrDefault(726, "172"));
 	}
 	@Test
 	void mapMapping_getObject_String_boolean_Test() {
@@ -132,21 +132,21 @@ public class YAMLConfigTest {
 		assertThrowsException(exception, () -> listConfig.getObject("int"));
 	}
 	@Test
-	void listMapping_getObject_String_Object_Test() {
-		assertEquals(listConfig.getObject(-19, "172"), "172" ); // out of bounds
-		assertEquals(listConfig.getObject(0  , "172"), list_0); // int
-		assertEquals(listConfig.getObject(1  , "172"), list_1); // long
-		assertEquals(listConfig.getObject(2  , "172"), list_2); // bigInteger
-		assertEquals(listConfig.getObject(3  , "172"), list_3); // double
-		assertEquals(listConfig.getObject(4  , "172"), list_4); // double
-		assertEquals(listConfig.getObject(5  , "172"), list_5); // string
-		assertEquals(listConfig.getObject(6  , "172"), list_6); // null
-		assertEquals(listConfig.getObject(7  , "172"), list_7); // boolean
-		assertEquals(listConfig.getObject(726, "172"), "172" ); // out of bounds
+	void listMapping_getObjectOrDefault_String_Object_Test() {
+		assertEquals(listConfig.getObjectOrDefault(-19, "172"), "172" ); // out of bounds
+		assertEquals(listConfig.getObjectOrDefault(0  , "172"), list_0); // int
+		assertEquals(listConfig.getObjectOrDefault(1  , "172"), list_1); // long
+		assertEquals(listConfig.getObjectOrDefault(2  , "172"), list_2); // bigInteger
+		assertEquals(listConfig.getObjectOrDefault(3  , "172"), list_3); // double
+		assertEquals(listConfig.getObjectOrDefault(4  , "172"), list_4); // double
+		assertEquals(listConfig.getObjectOrDefault(5  , "172"), list_5); // string
+		assertEquals(listConfig.getObjectOrDefault(6  , "172"), list_6); // null
+		assertEquals(listConfig.getObjectOrDefault(7  , "172"), list_7); // boolean
+		assertEquals(listConfig.getObjectOrDefault(726, "172"), "172" ); // out of bounds
 
 		WrongMappingException exception = WrongMappingException.NOT_A_MAP_EXCEPTION;
-		assertThrowsException(exception, () -> listConfig.getObject("hyd", "172"));
-		assertThrowsException(exception, () -> listConfig.getObject("int", "172"));
+		assertThrowsException(exception, () -> listConfig.getObjectOrDefault("hyd", "172"));
+		assertThrowsException(exception, () -> listConfig.getObjectOrDefault("int", "172"));
 	}
 	@Test
 	void listMapping_getObject_String_boolean_Test() {
@@ -195,16 +195,16 @@ public class YAMLConfigTest {
 		assertEquals(topConfig.getString("boolean"   ), null);
 	}
 	@Test
-	void mapMapping_getString_String_String_Test() {
-		assertEquals(topConfig.getString("hyd"       , "aaa"), "aaa");
-		assertEquals(topConfig.getString("int"       , "aaa"), "aaa");
-		assertEquals(topConfig.getString("long"      , "aaa"), "aaa");
-		assertEquals(topConfig.getString("bigInteger", "aaa"), "aaa");
-		assertEquals(topConfig.getString("float"     , "aaa"), "aaa");
-		assertEquals(topConfig.getString("double"    , "aaa"), "aaa");
-		assertEquals(topConfig.getString("string"    , "aaa"), map_string);
-		assertEquals(topConfig.getString("nul"       , "aaa"), "aaa");
-		assertEquals(topConfig.getString("boolean"   , "aaa"), "aaa");
+	void mapMapping_getStringOrDefault_String_String_Test() {
+		assertEquals(topConfig.getStringOrDefault("hyd"       , "aaa"), "aaa");
+		assertEquals(topConfig.getStringOrDefault("int"       , "aaa"), "aaa");
+		assertEquals(topConfig.getStringOrDefault("long"      , "aaa"), "aaa");
+		assertEquals(topConfig.getStringOrDefault("bigInteger", "aaa"), "aaa");
+		assertEquals(topConfig.getStringOrDefault("float"     , "aaa"), "aaa");
+		assertEquals(topConfig.getStringOrDefault("double"    , "aaa"), "aaa");
+		assertEquals(topConfig.getStringOrDefault("string"    , "aaa"), map_string);
+		assertEquals(topConfig.getStringOrDefault("nul"       , "aaa"), "aaa");
+		assertEquals(topConfig.getStringOrDefault("boolean"   , "aaa"), "aaa");
 	}
 	@Test
 	void mapMapping_getString_String_boolean_Test() {
@@ -245,17 +245,17 @@ public class YAMLConfigTest {
 		assertEquals(listConfig.getString(726), null  ); // out of bounds
 	}
 	@Test
-	void listMapping_getString_String_String_Test() {
-		assertEquals(listConfig.getString(-19, "aaa"), "aaa" ); // out of bounds
-		assertEquals(listConfig.getString(0  , "aaa"), "aaa" ); // int
-		assertEquals(listConfig.getString(1  , "aaa"), "aaa" ); // long
-		assertEquals(listConfig.getString(2  , "aaa"), "aaa" ); // bigInteger
-		assertEquals(listConfig.getString(3  , "aaa"), "aaa" ); // double
-		assertEquals(listConfig.getString(4  , "aaa"), "aaa" ); // double
-		assertEquals(listConfig.getString(5  , "aaa"), list_5); // string
-		assertEquals(listConfig.getString(6  , "aaa"), "aaa" ); // null
-		assertEquals(listConfig.getString(7  , "aaa"), "aaa" ); // boolean
-		assertEquals(listConfig.getString(726, "aaa"), "aaa" ); // out of bounds
+	void listMapping_getStringOrDefault_String_String_Test() {
+		assertEquals(listConfig.getStringOrDefault(-19, "aaa"), "aaa" ); // out of bounds
+		assertEquals(listConfig.getStringOrDefault(0  , "aaa"), "aaa" ); // int
+		assertEquals(listConfig.getStringOrDefault(1  , "aaa"), "aaa" ); // long
+		assertEquals(listConfig.getStringOrDefault(2  , "aaa"), "aaa" ); // bigInteger
+		assertEquals(listConfig.getStringOrDefault(3  , "aaa"), "aaa" ); // double
+		assertEquals(listConfig.getStringOrDefault(4  , "aaa"), "aaa" ); // double
+		assertEquals(listConfig.getStringOrDefault(5  , "aaa"), list_5); // string
+		assertEquals(listConfig.getStringOrDefault(6  , "aaa"), "aaa" ); // null
+		assertEquals(listConfig.getStringOrDefault(7  , "aaa"), "aaa" ); // boolean
+		assertEquals(listConfig.getStringOrDefault(726, "aaa"), "aaa" ); // out of bounds
 	}
 	@Test
 	void listMapping_getString_String_boolean_Test() {
@@ -297,16 +297,16 @@ public class YAMLConfigTest {
 		assertEquals(topConfig.getInt("boolean"   ), 0);
 	}
 	@Test
-	void mapMapping_getInt_String_int_Test() {
-		assertEquals(topConfig.getInt("hyd"       , -12), -12);
-		assertEquals(topConfig.getInt("int"       , -12), map_int);
-		assertEquals(topConfig.getInt("long"      , -12), -12);
-		assertEquals(topConfig.getInt("bigInteger", -12), -12);
-		assertEquals(topConfig.getInt("float"     , -12), -12);
-		assertEquals(topConfig.getInt("double"    , -12), -12);
-		assertEquals(topConfig.getInt("string"    , -12), -12);
-		assertEquals(topConfig.getInt("nul"       , -12), -12);
-		assertEquals(topConfig.getInt("boolean"   , -12), -12);
+	void mapMapping_getIntOrDefault_String_int_Test() {
+		assertEquals(topConfig.getIntOrDefault("hyd"       , -12), -12);
+		assertEquals(topConfig.getIntOrDefault("int"       , -12), map_int);
+		assertEquals(topConfig.getIntOrDefault("long"      , -12), -12);
+		assertEquals(topConfig.getIntOrDefault("bigInteger", -12), -12);
+		assertEquals(topConfig.getIntOrDefault("float"     , -12), -12);
+		assertEquals(topConfig.getIntOrDefault("double"    , -12), -12);
+		assertEquals(topConfig.getIntOrDefault("string"    , -12), -12);
+		assertEquals(topConfig.getIntOrDefault("nul"       , -12), -12);
+		assertEquals(topConfig.getIntOrDefault("boolean"   , -12), -12);
 	}
 	@Test
 	void mapMapping_getInt_String_boolean_Test() {
@@ -347,17 +347,17 @@ public class YAMLConfigTest {
 		assertEquals(listConfig.getInt(726), 0     ); // out of bounds
 	}
 	@Test
-	void listMapping_getInt_String_int_Test() {
-		assertEquals(listConfig.getInt(-19, -12), -12   ); // out of bounds
-		assertEquals(listConfig.getInt(0  , -12), list_0); // int
-		assertEquals(listConfig.getInt(1  , -12), -12   ); // long
-		assertEquals(listConfig.getInt(2  , -12), -12   ); // bigInteger
-		assertEquals(listConfig.getInt(3  , -12), -12   ); // double
-		assertEquals(listConfig.getInt(4  , -12), -12   ); // double
-		assertEquals(listConfig.getInt(5  , -12), -12   ); // string
-		assertEquals(listConfig.getInt(6  , -12), -12   ); // null
-		assertEquals(listConfig.getInt(7  , -12), -12   ); // boolean
-		assertEquals(listConfig.getInt(726, -12), -12   ); // out of bounds
+	void listMapping_getIntOrDefault_String_int_Test() {
+		assertEquals(listConfig.getIntOrDefault(-19, -12), -12   ); // out of bounds
+		assertEquals(listConfig.getIntOrDefault(0  , -12), list_0); // int
+		assertEquals(listConfig.getIntOrDefault(1  , -12), -12   ); // long
+		assertEquals(listConfig.getIntOrDefault(2  , -12), -12   ); // bigInteger
+		assertEquals(listConfig.getIntOrDefault(3  , -12), -12   ); // double
+		assertEquals(listConfig.getIntOrDefault(4  , -12), -12   ); // double
+		assertEquals(listConfig.getIntOrDefault(5  , -12), -12   ); // string
+		assertEquals(listConfig.getIntOrDefault(6  , -12), -12   ); // null
+		assertEquals(listConfig.getIntOrDefault(7  , -12), -12   ); // boolean
+		assertEquals(listConfig.getIntOrDefault(726, -12), -12   ); // out of bounds
 	}
 	@Test
 	void listMapping_getInt_String_boolean_Test() {
@@ -399,16 +399,16 @@ public class YAMLConfigTest {
 		assertEquals(topConfig.getLong("boolean"   ), 0);
 	}
 	@Test
-	void mapMapping_getLong_String_int_Test() {
-		assertEquals(topConfig.getLong("hyd"       , -12), -12);
-		assertEquals(topConfig.getLong("int"       , -12), map_int);
-		assertEquals(topConfig.getLong("long"      , -12), map_long);
-		assertEquals(topConfig.getLong("bigInteger", -12), -12);
-		assertEquals(topConfig.getLong("float"     , -12), -12);
-		assertEquals(topConfig.getLong("double"    , -12), -12);
-		assertEquals(topConfig.getLong("string"    , -12), -12);
-		assertEquals(topConfig.getLong("nul"       , -12), -12);
-		assertEquals(topConfig.getLong("boolean"   , -12), -12);
+	void mapMapping_getLongOrDefault_String_int_Test() {
+		assertEquals(topConfig.getLongOrDefault("hyd"       , -12), -12);
+		assertEquals(topConfig.getLongOrDefault("int"       , -12), map_int);
+		assertEquals(topConfig.getLongOrDefault("long"      , -12), map_long);
+		assertEquals(topConfig.getLongOrDefault("bigInteger", -12), -12);
+		assertEquals(topConfig.getLongOrDefault("float"     , -12), -12);
+		assertEquals(topConfig.getLongOrDefault("double"    , -12), -12);
+		assertEquals(topConfig.getLongOrDefault("string"    , -12), -12);
+		assertEquals(topConfig.getLongOrDefault("nul"       , -12), -12);
+		assertEquals(topConfig.getLongOrDefault("boolean"   , -12), -12);
 	}
 	@Test
 	void mapMapping_getLong_String_boolean_Test() {
@@ -449,17 +449,17 @@ public class YAMLConfigTest {
 		assertEquals(listConfig.getLong(726), 0     ); // out of bounds
 	}
 	@Test
-	void listMapping_getLong_String_int_Test() {
-		assertEquals(listConfig.getLong(-19, -12), -12   ); // out of bounds
-		assertEquals(listConfig.getLong(0  , -12), list_0); // int
-		assertEquals(listConfig.getLong(1  , -12), list_1); // long
-		assertEquals(listConfig.getLong(2  , -12), -12   ); // bigInteger
-		assertEquals(listConfig.getLong(3  , -12), -12   ); // double
-		assertEquals(listConfig.getLong(4  , -12), -12   ); // double
-		assertEquals(listConfig.getLong(5  , -12), -12   ); // string
-		assertEquals(listConfig.getLong(6  , -12), -12   ); // null
-		assertEquals(listConfig.getLong(7  , -12), -12   ); // boolean
-		assertEquals(listConfig.getLong(726, -12), -12   ); // out of bounds
+	void listMapping_getLongOrDefault_String_int_Test() {
+		assertEquals(listConfig.getLongOrDefault(-19, -12), -12   ); // out of bounds
+		assertEquals(listConfig.getLongOrDefault(0  , -12), list_0); // int
+		assertEquals(listConfig.getLongOrDefault(1  , -12), list_1); // long
+		assertEquals(listConfig.getLongOrDefault(2  , -12), -12   ); // bigInteger
+		assertEquals(listConfig.getLongOrDefault(3  , -12), -12   ); // double
+		assertEquals(listConfig.getLongOrDefault(4  , -12), -12   ); // double
+		assertEquals(listConfig.getLongOrDefault(5  , -12), -12   ); // string
+		assertEquals(listConfig.getLongOrDefault(6  , -12), -12   ); // null
+		assertEquals(listConfig.getLongOrDefault(7  , -12), -12   ); // boolean
+		assertEquals(listConfig.getLongOrDefault(726, -12), -12   ); // out of bounds
 	}
 	@Test
 	void listMapping_getLong_String_boolean_Test() {
@@ -505,20 +505,20 @@ public class YAMLConfigTest {
 		assertEquals(topConfig.getBigInteger("boolean"   ), zero);
 	}
 	@Test
-	void mapMapping_getBigInteger_String_int_Test() {
+	void mapMapping_getBigIntegerOrDefault_String_int_Test() {
 		BigInteger neg12 = BigInteger.valueOf(-12);
 		BigInteger bi_map_int = BigInteger.valueOf(map_int);
 		BigInteger bi_map_long = BigInteger.valueOf(map_long);
 
-		assertEquals(topConfig.getBigInteger("hyd"       , neg12), neg12);
-		assertEquals(topConfig.getBigInteger("int"       , neg12), bi_map_int);
-		assertEquals(topConfig.getBigInteger("long"      , neg12), bi_map_long);
-		assertEquals(topConfig.getBigInteger("bigInteger", neg12), map_bigInteger);
-		assertEquals(topConfig.getBigInteger("float"     , neg12), neg12);
-		assertEquals(topConfig.getBigInteger("double"    , neg12), neg12);
-		assertEquals(topConfig.getBigInteger("string"    , neg12), neg12);
-		assertEquals(topConfig.getBigInteger("nul"       , neg12), neg12);
-		assertEquals(topConfig.getBigInteger("boolean"   , neg12), neg12);
+		assertEquals(topConfig.getBigIntegerOrDefault("hyd"       , neg12), neg12);
+		assertEquals(topConfig.getBigIntegerOrDefault("int"       , neg12), bi_map_int);
+		assertEquals(topConfig.getBigIntegerOrDefault("long"      , neg12), bi_map_long);
+		assertEquals(topConfig.getBigIntegerOrDefault("bigInteger", neg12), map_bigInteger);
+		assertEquals(topConfig.getBigIntegerOrDefault("float"     , neg12), neg12);
+		assertEquals(topConfig.getBigIntegerOrDefault("double"    , neg12), neg12);
+		assertEquals(topConfig.getBigIntegerOrDefault("string"    , neg12), neg12);
+		assertEquals(topConfig.getBigIntegerOrDefault("nul"       , neg12), neg12);
+		assertEquals(topConfig.getBigIntegerOrDefault("boolean"   , neg12), neg12);
 	}
 	@Test
 	void mapMapping_getBigInteger_String_boolean_Test() {
@@ -567,21 +567,21 @@ public class YAMLConfigTest {
 		assertEquals(listConfig.getBigInteger(726), zero     ); // out of bounds
 	}
 	@Test
-	void listMapping_getBigInteger_String_int_Test() {
+	void listMapping_getBigIntegerOrDefault_String_int_Test() {
 		BigInteger neg12 = BigInteger.valueOf(-12);
 		BigInteger bi_list_0 = BigInteger.valueOf(list_0);
 		BigInteger bi_list_1 = BigInteger.valueOf(list_1);
 
-		assertEquals(listConfig.getBigInteger(-19, neg12), neg12    ); // out of bounds
-		assertEquals(listConfig.getBigInteger(0  , neg12), bi_list_0); // int
-		assertEquals(listConfig.getBigInteger(1  , neg12), bi_list_1); // long
-		assertEquals(listConfig.getBigInteger(2  , neg12), list_2   ); // bigInteger
-		assertEquals(listConfig.getBigInteger(3  , neg12), neg12    ); // double
-		assertEquals(listConfig.getBigInteger(4  , neg12), neg12    ); // double
-		assertEquals(listConfig.getBigInteger(5  , neg12), neg12    ); // string
-		assertEquals(listConfig.getBigInteger(6  , neg12), neg12    ); // null
-		assertEquals(listConfig.getBigInteger(7  , neg12), neg12    ); // boolean
-		assertEquals(listConfig.getBigInteger(726, neg12), neg12    ); // out of bounds
+		assertEquals(listConfig.getBigIntegerOrDefault(-19, neg12), neg12    ); // out of bounds
+		assertEquals(listConfig.getBigIntegerOrDefault(0  , neg12), bi_list_0); // int
+		assertEquals(listConfig.getBigIntegerOrDefault(1  , neg12), bi_list_1); // long
+		assertEquals(listConfig.getBigIntegerOrDefault(2  , neg12), list_2   ); // bigInteger
+		assertEquals(listConfig.getBigIntegerOrDefault(3  , neg12), neg12    ); // double
+		assertEquals(listConfig.getBigIntegerOrDefault(4  , neg12), neg12    ); // double
+		assertEquals(listConfig.getBigIntegerOrDefault(5  , neg12), neg12    ); // string
+		assertEquals(listConfig.getBigIntegerOrDefault(6  , neg12), neg12    ); // null
+		assertEquals(listConfig.getBigIntegerOrDefault(7  , neg12), neg12    ); // boolean
+		assertEquals(listConfig.getBigIntegerOrDefault(726, neg12), neg12    ); // out of bounds
 	}
 	@Test
 	void listMapping_getBigInteger_String_boolean_Test() {
@@ -627,16 +627,16 @@ public class YAMLConfigTest {
 		assertEquals(topConfig.getFloat("boolean"   ),         0);
 	}
 	@Test
-	void mapMapping_getFloat_String_int_Test() {
-		assertEquals(topConfig.getFloat("hyd"       , (float) -12.8), (float) -12.8);
-		assertEquals(topConfig.getFloat("int"       , (float) -12.8),         map_int);
-		assertEquals(topConfig.getFloat("long"      , (float) -12.8),         map_long);
-		assertEquals(topConfig.getFloat("bigInteger", (float) -12.8),         map_bigInteger.floatValue());
-		assertEquals(topConfig.getFloat("float"     , (float) -12.8), (float) map_float);
-		assertEquals(topConfig.getFloat("double"    , (float) -12.8), (float) map_double);
-		assertEquals(topConfig.getFloat("string"    , (float) -12.8), (float) -12.8);
-		assertEquals(topConfig.getFloat("nul"       , (float) -12.8), (float) -12.8);
-		assertEquals(topConfig.getFloat("boolean"   , (float) -12.8), (float) -12.8);
+	void mapMapping_getFloatOrDefault_String_int_Test() {
+		assertEquals(topConfig.getFloatOrDefault("hyd"       , (float) -12.8), (float) -12.8);
+		assertEquals(topConfig.getFloatOrDefault("int"       , (float) -12.8),         map_int);
+		assertEquals(topConfig.getFloatOrDefault("long"      , (float) -12.8),         map_long);
+		assertEquals(topConfig.getFloatOrDefault("bigInteger", (float) -12.8),         map_bigInteger.floatValue());
+		assertEquals(topConfig.getFloatOrDefault("float"     , (float) -12.8), (float) map_float);
+		assertEquals(topConfig.getFloatOrDefault("double"    , (float) -12.8), (float) map_double);
+		assertEquals(topConfig.getFloatOrDefault("string"    , (float) -12.8), (float) -12.8);
+		assertEquals(topConfig.getFloatOrDefault("nul"       , (float) -12.8), (float) -12.8);
+		assertEquals(topConfig.getFloatOrDefault("boolean"   , (float) -12.8), (float) -12.8);
 	}
 	@Test
 	void mapMapping_getFloat_String_boolean_Test() {
@@ -677,17 +677,17 @@ public class YAMLConfigTest {
 		assertEquals(listConfig.getFloat(726),         0                  ); // out of bounds
 	}
 	@Test
-	void listMapping_getFloat_String_int_Test() {
-		assertEquals(listConfig.getFloat(-19, (float) -12.8), (float) -12.8              ); // out of bounds
-		assertEquals(listConfig.getFloat(0  , (float) -12.8), (float) list_0             ); // int
-		assertEquals(listConfig.getFloat(1  , (float) -12.8), (float) list_1             ); // long
-		assertEquals(listConfig.getFloat(2  , (float) -12.8), (float) list_2.floatValue()); // bigInteger
-		assertEquals(listConfig.getFloat(3  , (float) -12.8), (float) list_3             ); // double
-		assertEquals(listConfig.getFloat(4  , (float) -12.8), (float) list_4             ); // double
-		assertEquals(listConfig.getFloat(5  , (float) -12.8), (float) -12.8              ); // string
-		assertEquals(listConfig.getFloat(6  , (float) -12.8), (float) -12.8              ); // null
-		assertEquals(listConfig.getFloat(7  , (float) -12.8), (float) -12.8              ); // boolean
-		assertEquals(listConfig.getFloat(726, (float) -12.8), (float) -12.8              ); // out of bounds
+	void listMapping_getFloatOrDefault_String_int_Test() {
+		assertEquals(listConfig.getFloatOrDefault(-19, (float) -12.8), (float) -12.8              ); // out of bounds
+		assertEquals(listConfig.getFloatOrDefault(0  , (float) -12.8), (float) list_0             ); // int
+		assertEquals(listConfig.getFloatOrDefault(1  , (float) -12.8), (float) list_1             ); // long
+		assertEquals(listConfig.getFloatOrDefault(2  , (float) -12.8), (float) list_2.floatValue()); // bigInteger
+		assertEquals(listConfig.getFloatOrDefault(3  , (float) -12.8), (float) list_3             ); // double
+		assertEquals(listConfig.getFloatOrDefault(4  , (float) -12.8), (float) list_4             ); // double
+		assertEquals(listConfig.getFloatOrDefault(5  , (float) -12.8), (float) -12.8              ); // string
+		assertEquals(listConfig.getFloatOrDefault(6  , (float) -12.8), (float) -12.8              ); // null
+		assertEquals(listConfig.getFloatOrDefault(7  , (float) -12.8), (float) -12.8              ); // boolean
+		assertEquals(listConfig.getFloatOrDefault(726, (float) -12.8), (float) -12.8              ); // out of bounds
 	}
 	@Test
 	void listMapping_getFloat_String_boolean_Test() {
@@ -729,16 +729,16 @@ public class YAMLConfigTest {
 		assertEquals(topConfig.getDouble("boolean"   ), 0);
 	}
 	@Test
-	void mapMapping_getDouble_String_int_Test() {
-		assertEquals(topConfig.getDouble("hyd"       , -12.8), -12.8);
-		assertEquals(topConfig.getDouble("int"       , -12.8), map_int);
-		assertEquals(topConfig.getDouble("long"      , -12.8), map_long);
-		assertEquals(topConfig.getDouble("bigInteger", -12.8), map_bigInteger.doubleValue());
-		assertEquals(topConfig.getDouble("float"     , -12.8), map_float);
-		assertEquals(topConfig.getDouble("double"    , -12.8), map_double);
-		assertEquals(topConfig.getDouble("string"    , -12.8), -12.8);
-		assertEquals(topConfig.getDouble("nul"       , -12.8), -12.8);
-		assertEquals(topConfig.getDouble("boolean"   , -12.8), -12.8);
+	void mapMapping_getDoubleOrDefault_String_int_Test() {
+		assertEquals(topConfig.getDoubleOrDefault("hyd"       , -12.8), -12.8);
+		assertEquals(topConfig.getDoubleOrDefault("int"       , -12.8), map_int);
+		assertEquals(topConfig.getDoubleOrDefault("long"      , -12.8), map_long);
+		assertEquals(topConfig.getDoubleOrDefault("bigInteger", -12.8), map_bigInteger.doubleValue());
+		assertEquals(topConfig.getDoubleOrDefault("float"     , -12.8), map_float);
+		assertEquals(topConfig.getDoubleOrDefault("double"    , -12.8), map_double);
+		assertEquals(topConfig.getDoubleOrDefault("string"    , -12.8), -12.8);
+		assertEquals(topConfig.getDoubleOrDefault("nul"       , -12.8), -12.8);
+		assertEquals(topConfig.getDoubleOrDefault("boolean"   , -12.8), -12.8);
 	}
 	@Test
 	void mapMapping_getDouble_String_boolean_Test() {
@@ -779,17 +779,17 @@ public class YAMLConfigTest {
 		assertEquals(listConfig.getDouble(726), 0                   ); // out of bounds
 	}
 	@Test
-	void listMapping_getDouble_String_int_Test() {
-		assertEquals(listConfig.getDouble(-19, -12.8), -12.8               ); // out of bounds
-		assertEquals(listConfig.getDouble(0  , -12.8), list_0              ); // int
-		assertEquals(listConfig.getDouble(1  , -12.8), list_1              ); // long
-		assertEquals(listConfig.getDouble(2  , -12.8), list_2.doubleValue()); // bigInteger
-		assertEquals(listConfig.getDouble(3  , -12.8), list_3              ); // double
-		assertEquals(listConfig.getDouble(4  , -12.8), list_4              ); // double
-		assertEquals(listConfig.getDouble(5  , -12.8), -12.8               ); // string
-		assertEquals(listConfig.getDouble(6  , -12.8), -12.8               ); // null
-		assertEquals(listConfig.getDouble(7  , -12.8), -12.8               ); // boolean
-		assertEquals(listConfig.getDouble(726, -12.8), -12.8               ); // out of bounds
+	void listMapping_getDoubleOrDefault_String_int_Test() {
+		assertEquals(listConfig.getDoubleOrDefault(-19, -12.8), -12.8               ); // out of bounds
+		assertEquals(listConfig.getDoubleOrDefault(0  , -12.8), list_0              ); // int
+		assertEquals(listConfig.getDoubleOrDefault(1  , -12.8), list_1              ); // long
+		assertEquals(listConfig.getDoubleOrDefault(2  , -12.8), list_2.doubleValue()); // bigInteger
+		assertEquals(listConfig.getDoubleOrDefault(3  , -12.8), list_3              ); // double
+		assertEquals(listConfig.getDoubleOrDefault(4  , -12.8), list_4              ); // double
+		assertEquals(listConfig.getDoubleOrDefault(5  , -12.8), -12.8               ); // string
+		assertEquals(listConfig.getDoubleOrDefault(6  , -12.8), -12.8               ); // null
+		assertEquals(listConfig.getDoubleOrDefault(7  , -12.8), -12.8               ); // boolean
+		assertEquals(listConfig.getDoubleOrDefault(726, -12.8), -12.8               ); // out of bounds
 	}
 	@Test
 	void listMapping_getDouble_String_boolean_Test() {

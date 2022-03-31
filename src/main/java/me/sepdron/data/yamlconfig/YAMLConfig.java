@@ -110,7 +110,7 @@ public class YAMLConfig {
 		if (!isMap) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
 		return mapValues.get(key);
 	}
-	public Object getObject(String key, Object defaultValue) throws WrongMappingException {
+	public Object getObjectOrDefault(String key, Object defaultValue) throws WrongMappingException {
 		if (!isMap) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
 		return mapValues.containsKey(key)? mapValues.get(key) : defaultValue;
 	}
@@ -124,7 +124,7 @@ public class YAMLConfig {
 		if (!isList) throw WrongMappingException.NOT_A_LIST_EXCEPTION;
 		return inRange(index)? listValues.get(index) : null;
 	}
-	public Object getObject(int index, Object defaultValue) throws WrongMappingException {
+	public Object getObjectOrDefault(int index, Object defaultValue) throws WrongMappingException {
 		if (!isList) throw WrongMappingException.NOT_A_LIST_EXCEPTION;
 		return inRange(index)? listValues.get(index) : defaultValue;
 	}
@@ -140,7 +140,7 @@ public class YAMLConfig {
 		if (o instanceof String) return (String) o;
 		return null;
 	}
-	public String getString(String key, String defaultValue) throws WrongMappingException {
+	public String getStringOrDefault(String key, String defaultValue) throws WrongMappingException {
 		Object o = getObject(key);
 		if (o instanceof String) return (String) o;
 		return defaultValue;
@@ -156,7 +156,7 @@ public class YAMLConfig {
 		if (o instanceof String) return (String) o;
 		return null;
 	}
-	public String getString(int index, String defaultValue) throws WrongMappingException {
+	public String getStringOrDefault(int index, String defaultValue) throws WrongMappingException {
 		Object o = getObject(index);
 		if (o instanceof String) return (String) o;
 		return defaultValue;
@@ -176,7 +176,7 @@ public class YAMLConfig {
 		if (isInt(o)) return (Integer) o;
 		return 0;
 	}
-	public int getInt(String key, int defaultValue) throws WrongMappingException {
+	public int getIntOrDefault(String key, int defaultValue) throws WrongMappingException {
 		Object o = getObject(key);
 		if (isInt(o)) return (Integer) o;
 		return defaultValue;
@@ -192,7 +192,7 @@ public class YAMLConfig {
 		if (isInt(o)) return (Integer) o;
 		return 0;
 	}
-	public int getInt(int index, int defaultValue) throws WrongMappingException {
+	public int getIntOrDefault(int index, int defaultValue) throws WrongMappingException {
 		Object o = getObject(index);
 		if (isInt(o)) return (Integer) o;
 		return defaultValue;
@@ -215,7 +215,7 @@ public class YAMLConfig {
 		if (isLong(o)) return toLong(o);
 		return 0;
 	}
-	public long getLong(String key, long defaultValue) throws WrongMappingException {
+	public long getLongOrDefault(String key, long defaultValue) throws WrongMappingException {
 		Object o = getObject(key);
 		if (isLong(o)) return toLong(o);
 		return defaultValue;
@@ -231,7 +231,7 @@ public class YAMLConfig {
 		if (isLong(o)) return toLong(o);
 		return 0;
 	}
-	public long getLong(int index, long defaultValue) throws WrongMappingException {
+	public long getLongOrDefault(int index, long defaultValue) throws WrongMappingException {
 		Object o = getObject(index);
 		if (isLong(o)) return toLong(o);
 		return defaultValue;
@@ -252,7 +252,7 @@ public class YAMLConfig {
 		else if (o instanceof BigInteger) return (BigInteger) o;
 		return BigInteger.ZERO;
 	}
-	public BigInteger getBigInteger(String key, BigInteger defaultValue) throws WrongMappingException {
+	public BigInteger getBigIntegerOrDefault(String key, BigInteger defaultValue) throws WrongMappingException {
 		Object o = getObject(key);
 		if (isLong(o)) return BigInteger.valueOf(toLong(o));
 		else if (o instanceof BigInteger) return (BigInteger) o;
@@ -271,7 +271,7 @@ public class YAMLConfig {
 		else if (o instanceof BigInteger) return (BigInteger) o;
 		return BigInteger.ZERO;
 	}
-	public BigInteger getBigInteger(int index, BigInteger defaultValue) throws WrongMappingException {
+	public BigInteger getBigIntegerOrDefault(int index, BigInteger defaultValue) throws WrongMappingException {
 		Object o = getObject(index);
 		if (isLong(o)) return BigInteger.valueOf(toLong(o));
 		else if (o instanceof BigInteger) return (BigInteger) o;
@@ -296,7 +296,7 @@ public class YAMLConfig {
 		if (isFloatingPoint(o)) return toFloat(o);
 		return 0;
 	}
-	public float getFloat(String key, float defaultValue) throws WrongMappingException {
+	public float getFloatOrDefault(String key, float defaultValue) throws WrongMappingException {
 		Object o = getObject(key);
 		if (isFloatingPoint(o)) return toFloat(o);
 		return defaultValue;
@@ -312,7 +312,7 @@ public class YAMLConfig {
 		if (isFloatingPoint(o)) return toFloat(o);
 		return 0;
 	}
-	public float getFloat(int index, float defaultValue) throws WrongMappingException {
+	public float getFloatOrDefault(int index, float defaultValue) throws WrongMappingException {
 		Object o = getObject(index);
 		if (isFloatingPoint(o)) return toFloat(o);
 		return defaultValue;
@@ -332,7 +332,7 @@ public class YAMLConfig {
 		if (isFloatingPoint(o)) return toDouble(o);
 		return 0;
 	}
-	public double getDouble(String key, double defaultValue) throws WrongMappingException {
+	public double getDoubleOrDefault(String key, double defaultValue) throws WrongMappingException {
 		Object o = getObject(key);
 		if (isFloatingPoint(o)) return toDouble(o);
 		return defaultValue;
@@ -348,7 +348,7 @@ public class YAMLConfig {
 		if (isFloatingPoint(o)) return toDouble(o);
 		return 0;
 	}
-	public double getDouble(int index, double defaultValue) throws WrongMappingException {
+	public double getDoubleOrDefault(int index, double defaultValue) throws WrongMappingException {
 		Object o = getObject(index);
 		if (isFloatingPoint(o)) return toDouble(o);
 		return defaultValue;
