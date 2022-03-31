@@ -372,6 +372,108 @@ public class YAMLConfigTest {
 		assertThrows(exceptionClass, () -> listConfig.getInt(726, true));  // out of bounds
 	}
 
+	@Test
+	void mapMapping_getLong_String_Test() {
+		assertEquals(topConfig.getLong("hyd"       ), 0);
+		assertEquals(topConfig.getLong("int"       ), 121);
+		assertEquals(topConfig.getLong("long"      ), 1723612312127267231L);
+		assertEquals(topConfig.getLong("bigInteger"), 0);
+		assertEquals(topConfig.getLong("float"     ), 0);
+		assertEquals(topConfig.getLong("double"    ), 0);
+		assertEquals(topConfig.getLong("string"    ), 0);
+		assertEquals(topConfig.getLong("nul"       ), 0);
+		assertEquals(topConfig.getLong("boolean"   ), 0);
+	}
+	@Test
+	void mapMapping_getLong_String_int_Test() {
+		assertEquals(topConfig.getLong("hyd"       , -12), -12);
+		assertEquals(topConfig.getLong("int"       , -12), 121);
+		assertEquals(topConfig.getLong("long"      , -12), 1723612312127267231L);
+		assertEquals(topConfig.getLong("bigInteger", -12), -12);
+		assertEquals(topConfig.getLong("float"     , -12), -12);
+		assertEquals(topConfig.getLong("double"    , -12), -12);
+		assertEquals(topConfig.getLong("string"    , -12), -12);
+		assertEquals(topConfig.getLong("nul"       , -12), -12);
+		assertEquals(topConfig.getLong("boolean"   , -12), -12);
+	}
+	@Test
+	void mapMapping_getLong_String_boolean_Test() {
+		assertEquals(topConfig.getLong("hyd"       , false), 0);
+		assertEquals(topConfig.getLong("int"       , false), 121);
+		assertEquals(topConfig.getLong("long"      , false), 1723612312127267231L);
+		assertEquals(topConfig.getLong("bigInteger", false), 0);
+		assertEquals(topConfig.getLong("float"     , false), 0);
+		assertEquals(topConfig.getLong("double"    , false), 0);
+		assertEquals(topConfig.getLong("string"    , false), 0);
+		assertEquals(topConfig.getLong("nul"       , false), 0);
+		assertEquals(topConfig.getLong("boolean"   , false), 0);
+
+		assertEquals(topConfig.getLong("int"       , true ), 121);
+		assertEquals(topConfig.getLong("long"       , true ), 1723612312127267231L);
+
+		Class<NoneOfTypeException> exceptionClass = NoneOfTypeException.class;
+		assertThrows(exceptionClass, () -> topConfig.getLong("hyd"       , true));
+		assertThrows(exceptionClass, () -> topConfig.getLong("bigInteger", true));
+		assertThrows(exceptionClass, () -> topConfig.getLong("float"     , true));
+		assertThrows(exceptionClass, () -> topConfig.getLong("double"    , true));
+		assertThrows(exceptionClass, () -> topConfig.getLong("string"    , true));
+		assertThrows(exceptionClass, () -> topConfig.getLong("nul"       , true));
+		assertThrows(exceptionClass, () -> topConfig.getLong("boolean"   , true));
+	}
+
+	@Test
+	void listMapping_getLong_String_Test() {
+		assertEquals(listConfig.getLong(-19), 0);                     // out of bounds
+		assertEquals(listConfig.getLong(0  ), -121);                  // int
+		assertEquals(listConfig.getLong(1  ), -1723612312127267231L); // long
+		assertEquals(listConfig.getLong(2  ), 0);                     // bigInteger
+		assertEquals(listConfig.getLong(3  ), 0);                     // double
+		assertEquals(listConfig.getLong(4  ), 0);                     // double
+		assertEquals(listConfig.getLong(5  ), 0);                     // string
+		assertEquals(listConfig.getLong(6  ), 0);                     // null
+		assertEquals(listConfig.getLong(7  ), 0);                     // boolean
+		assertEquals(listConfig.getLong(726), 0);                     // out of bounds
+	}
+	@Test
+	void listMapping_getLong_String_int_Test() {
+		assertEquals(listConfig.getLong(-19, -12), -12);                   // out of bounds
+		assertEquals(listConfig.getLong(0  , -12), -121);                  // int
+		assertEquals(listConfig.getLong(1  , -12), -1723612312127267231L); // long
+		assertEquals(listConfig.getLong(2  , -12), -12);                   // bigInteger
+		assertEquals(listConfig.getLong(3  , -12), -12);                   // double
+		assertEquals(listConfig.getLong(4  , -12), -12);                   // double
+		assertEquals(listConfig.getLong(5  , -12), -12);                   // string
+		assertEquals(listConfig.getLong(6  , -12), -12);                   // null
+		assertEquals(listConfig.getLong(7  , -12), -12);                   // boolean
+		assertEquals(listConfig.getLong(726, -12), -12);                   // out of bounds
+	}
+	@Test
+	void listMapping_getLong_String_boolean_Test() {
+		assertEquals(listConfig.getLong(-19, false), 0);                     // out of bounds
+		assertEquals(listConfig.getLong(0  , false), -121);                  // int
+		assertEquals(listConfig.getLong(1  , false), -1723612312127267231L); // long
+		assertEquals(listConfig.getLong(2  , false), 0);                     // bigInteger
+		assertEquals(listConfig.getLong(3  , false), 0);                     // double
+		assertEquals(listConfig.getLong(4  , false), 0);                     // double
+		assertEquals(listConfig.getLong(5  , false), 0);                     // string
+		assertEquals(listConfig.getLong(6  , false), 0);                     // null
+		assertEquals(listConfig.getLong(7  , false), 0);                     // boolean
+		assertEquals(listConfig.getLong(726, false), 0);                     // out of bounds
+
+		assertEquals(listConfig.getLong(0  , true ), -121);                  // int
+		assertEquals(listConfig.getLong(1  , true ), -1723612312127267231L); // long
+
+		Class<NoneOfTypeException> exceptionClass = NoneOfTypeException.class;
+		assertThrows(exceptionClass, () -> listConfig.getLong(-19, true));  // out of bounds
+		assertThrows(exceptionClass, () -> listConfig.getLong(2  , true));  // bigInteger
+		assertThrows(exceptionClass, () -> listConfig.getLong(3  , true));  // double
+		assertThrows(exceptionClass, () -> listConfig.getLong(4  , true));  // double
+		assertThrows(exceptionClass, () -> listConfig.getLong(5  , true));  // string
+		assertThrows(exceptionClass, () -> listConfig.getLong(6  , true));  // null
+		assertThrows(exceptionClass, () -> listConfig.getLong(7  , true));  // boolean
+		assertThrows(exceptionClass, () -> listConfig.getLong(726, true));  // out of bounds
+	}
+
 	public static void assertThrowsException(Throwable exception, Executable executable) {
 		try {
 			executable.execute();

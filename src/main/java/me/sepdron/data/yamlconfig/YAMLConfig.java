@@ -111,7 +111,7 @@ public class YAMLConfig {
 	}
 	public Object getObject(String key, Object defaultValue) throws WrongMappingException {
 		if (!isMap) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
-		return mapValues.getOrDefault(key, defaultValue);
+		return mapValues.containsKey(key)? mapValues.get(key) : defaultValue;
 	}
 	public Object getObject(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
 		if (!isMap) throw WrongMappingException.NOT_A_MAP_EXCEPTION;
@@ -196,6 +196,39 @@ public class YAMLConfig {
 	public int getInt(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
 		Object o = getObject(index, required);
 		if (o instanceof Integer) return (Integer) o;
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "int");
+		return 0;
+	}
+
+	public long getLong(String key) throws WrongMappingException {
+		Object o = getObject(key);
+		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
+		return 0;
+	}
+	public long getLong(String key, long defaultValue) throws WrongMappingException {
+		Object o = getObject(key);
+		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
+		return defaultValue;
+	}
+	public long getLong(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(key, required);
+		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(key), "int");
+		return 0;
+	}
+	public long getLong(int index) throws WrongMappingException {
+		Object o = getObject(index);
+		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
+		return 0;
+	}
+	public long getLong(int index, long defaultValue) throws WrongMappingException {
+		Object o = getObject(index);
+		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
+		return defaultValue;
+	}
+	public long getLong(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(index, required);
+		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
 		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "int");
 		return 0;
 	}
