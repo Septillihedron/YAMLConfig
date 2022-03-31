@@ -285,4 +285,43 @@ public class YAMLConfig {
 		return BigInteger.ZERO;
 	}
 
+	private boolean isFloatingPoint(Object o) {
+		return isBigInteger(o) || o instanceof Double || o instanceof Float;
+	}
+	private float toFloat(Object o) {
+		return ((Number) o).floatValue();
+	}
+	public float getFloat(String key) throws WrongMappingException {
+		Object o = getObject(key);
+		if (isFloatingPoint(o)) return toFloat(o);
+		return 0;
+	}
+	public float getFloat(String key, float defaultValue) throws WrongMappingException {
+		Object o = getObject(key);
+		if (isFloatingPoint(o)) return toFloat(o);
+		return defaultValue;
+	}
+	public float getFloat(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(key, required);
+		if (isFloatingPoint(o)) return toFloat(o);
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(key), "float");
+		return 0;
+	}
+	public float getFloat(int index) throws WrongMappingException {
+		Object o = getObject(index);
+		if (isFloatingPoint(o)) return toFloat(o);
+		return 0;
+	}
+	public float getFloat(int index, float defaultValue) throws WrongMappingException {
+		Object o = getObject(index);
+		if (isFloatingPoint(o)) return toFloat(o);
+		return defaultValue;
+	}
+	public float getFloat(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(index, required);
+		if (isFloatingPoint(o)) return toFloat(o);
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "float");
+		return 0;
+	}
+
 }
