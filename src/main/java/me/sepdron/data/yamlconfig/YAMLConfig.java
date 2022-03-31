@@ -360,4 +360,40 @@ public class YAMLConfig {
 		return 0;
 	}
 
+	private boolean isBoolean(Object o) {
+		return o instanceof Boolean;
+	}
+	public boolean getBoolean(String key) throws WrongMappingException {
+		Object o = getObject(key);
+		if (isBoolean(o)) return (Boolean) o;
+		return false;
+	}
+	public boolean getBooleanOrDefault(String key, boolean defaultValue) throws WrongMappingException {
+		Object o = getObject(key);
+		if (isBoolean(o)) return (Boolean) o;
+		return defaultValue;
+	}
+	public boolean getBoolean(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(key, required);
+		if (isBoolean(o)) return (Boolean) o;
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(key), "boolean");
+		return false;
+	}
+	public boolean getBoolean(int index) throws WrongMappingException {
+		Object o = getObject(index);
+		if (isBoolean(o)) return (Boolean) o;
+		return false;
+	}
+	public boolean getBooleanOrDefault(int index, boolean defaultValue) throws WrongMappingException {
+		Object o = getObject(index);
+		if (isBoolean(o)) return (Boolean) o;
+		return defaultValue;
+	}
+	public boolean getBoolean(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(index, required);
+		if (isBoolean(o)) return (Boolean) o;
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "boolean");
+		return false;
+	}
+
 }
