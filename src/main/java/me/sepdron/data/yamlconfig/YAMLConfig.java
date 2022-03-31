@@ -168,106 +168,118 @@ public class YAMLConfig {
 		return null;
 	}
 
+	private boolean isInt(Object o) {
+		return o instanceof Integer;
+	}
 	public int getInt(String key) throws WrongMappingException {
 		Object o = getObject(key);
-		if (o instanceof Integer) return (Integer) o;
+		if (isInt(o)) return (Integer) o;
 		return 0;
 	}
 	public int getInt(String key, int defaultValue) throws WrongMappingException {
 		Object o = getObject(key);
-		if (o instanceof Integer) return (Integer) o;
+		if (isInt(o)) return (Integer) o;
 		return defaultValue;
 	}
 	public int getInt(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
 		Object o = getObject(key, required);
-		if (o instanceof Integer) return (Integer) o;
+		if (isInt(o)) return (Integer) o;
 		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(key), "int");
 		return 0;
 	}
 	public int getInt(int index) throws WrongMappingException {
 		Object o = getObject(index);
-		if (o instanceof Integer) return (Integer) o;
+		if (isInt(o)) return (Integer) o;
 		return 0;
 	}
 	public int getInt(int index, int defaultValue) throws WrongMappingException {
 		Object o = getObject(index);
-		if (o instanceof Integer) return (Integer) o;
+		if (isInt(o)) return (Integer) o;
 		return defaultValue;
 	}
 	public int getInt(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
 		Object o = getObject(index, required);
-		if (o instanceof Integer) return (Integer) o;
+		if (isInt(o)) return (Integer) o;
 		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "int");
 		return 0;
 	}
 
+	private boolean isLong(Object o) {
+		return isInt(o) || o instanceof Long;
+	}
+	private long toLong(Object o) {
+		return ((Number) o).longValue();
+	}
 	public long getLong(String key) throws WrongMappingException {
 		Object o = getObject(key);
-		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
+		if (isLong(o)) return toLong(o);
 		return 0;
 	}
 	public long getLong(String key, long defaultValue) throws WrongMappingException {
 		Object o = getObject(key);
-		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
+		if (isLong(o)) return toLong(o);
 		return defaultValue;
 	}
 	public long getLong(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
 		Object o = getObject(key, required);
-		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
+		if (isLong(o)) return toLong(o);
 		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(key), "int");
 		return 0;
 	}
 	public long getLong(int index) throws WrongMappingException {
 		Object o = getObject(index);
-		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
+		if (isLong(o)) return toLong(o);
 		return 0;
 	}
 	public long getLong(int index, long defaultValue) throws WrongMappingException {
 		Object o = getObject(index);
-		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
+		if (isLong(o)) return toLong(o);
 		return defaultValue;
 	}
 	public long getLong(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
 		Object o = getObject(index, required);
-		if (o instanceof Integer || o instanceof Long) return ((Number) o).longValue();
+		if (isLong(o)) return toLong(o);
 		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "int");
 		return 0;
 	}
 
+	private boolean isBigInteger(Object o) {
+		return isLong(o) || o instanceof BigInteger;
+	}
 	public BigInteger getBigInteger(String key) throws WrongMappingException {
 		Object o = getObject(key);
-		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		if (isLong(o)) return BigInteger.valueOf(toLong(o));
 		else if (o instanceof BigInteger) return (BigInteger) o;
 		return BigInteger.ZERO;
 	}
 	public BigInteger getBigInteger(String key, BigInteger defaultValue) throws WrongMappingException {
 		Object o = getObject(key);
-		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		if (isLong(o)) return BigInteger.valueOf(toLong(o));
 		else if (o instanceof BigInteger) return (BigInteger) o;
 		return defaultValue;
 	}
 	public BigInteger getBigInteger(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
 		Object o = getObject(key, required);
-		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		if (isLong(o)) return BigInteger.valueOf(toLong(o));
 		else if (o instanceof BigInteger) return (BigInteger) o;
 		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(key), "BigInteger");
 		return BigInteger.ZERO;
 	}
 	public BigInteger getBigInteger(int index) throws WrongMappingException {
 		Object o = getObject(index);
-		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		if (isLong(o)) return BigInteger.valueOf(toLong(o));
 		else if (o instanceof BigInteger) return (BigInteger) o;
 		return BigInteger.ZERO;
 	}
 	public BigInteger getBigInteger(int index, BigInteger defaultValue) throws WrongMappingException {
 		Object o = getObject(index);
-		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		if (isLong(o)) return BigInteger.valueOf(toLong(o));
 		else if (o instanceof BigInteger) return (BigInteger) o;
 		return defaultValue;
 	}
 	public BigInteger getBigInteger(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
 		Object o = getObject(index, required);
-		if (o instanceof Integer || o instanceof Long) return BigInteger.valueOf(((Number) o).longValue());
+		if (isLong(o)) return BigInteger.valueOf(toLong(o));
 		else if (o instanceof BigInteger) return (BigInteger) o;
 		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "BigInteger");
 		return BigInteger.ZERO;
