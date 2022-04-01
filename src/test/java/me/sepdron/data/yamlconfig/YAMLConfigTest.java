@@ -15,12 +15,7 @@ import org.junit.jupiter.api.function.Executable;
 
 /*
 TODO:
-- Different formatted strings:
-    - '>' multi-line strings
-	- '|' multi-line strings
-	- "'" strings
-	- '"' strings
-	- strings with control characters
+
 */
 
 public class YAMLConfigTest {
