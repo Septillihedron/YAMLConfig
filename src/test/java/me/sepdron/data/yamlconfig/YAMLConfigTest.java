@@ -2,12 +2,9 @@ package me.sepdron.data.yamlconfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 
 import org.junit.jupiter.api.Test;
@@ -39,16 +36,9 @@ public class YAMLConfigTest {
 	}
 
 	//toString() manually tested
-	private void saveConfig() {
+	private void saveConfig() throws IOException {
 		File file = FileSystems.getDefault().getPath("transformed data.yaml").toFile();
-		String yaml = topConfig.toString();
-		try (var writer = new BufferedWriter(new FileWriter(file, Charset.forName("UTF-8")))) {
-			writer.write(yaml);
-			writer.flush();
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		topConfig.save(file);
 	}
 
 	private int map_int = 121;

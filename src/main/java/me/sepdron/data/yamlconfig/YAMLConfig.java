@@ -1,8 +1,10 @@
 package me.sepdron.data.yamlconfig;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -17,7 +19,6 @@ import me.sepdron.utils.CollectionUtils;
 /*
 TODO:
 - add Number getters
-- saving to file
 - add YAMLConfig getters
 */
 
@@ -85,6 +86,15 @@ public class YAMLConfig {
 				return new YAMLConfig(null, file.getPath(), (List<?>) values);
 			return null;
 
+		} catch (IOException e) {
+			throw e;
+		}
+	}
+	public void save(File file) throws IOException {
+		try (var writer = new BufferedWriter(new FileWriter(file, Charset.forName("UTF-8")))) {
+			writer.write(toString());
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			throw e;
 		}
