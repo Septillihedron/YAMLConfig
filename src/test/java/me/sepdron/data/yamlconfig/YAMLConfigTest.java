@@ -13,6 +13,16 @@ import java.nio.file.FileSystems;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+/*
+TODO:
+- Different formatted strings:
+    - '>' multi-line strings
+	- '|' multi-line strings
+	- "'" strings
+	- '"' strings
+	- strings with control characters
+*/
+
 public class YAMLConfigTest {
 
 	public static void main(String[] args) throws IOException {

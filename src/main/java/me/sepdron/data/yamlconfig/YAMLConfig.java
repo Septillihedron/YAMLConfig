@@ -14,6 +14,13 @@ import org.yaml.snakeyaml.Yaml;
 
 import me.sepdron.utils.CollectionUtils;
 
+/*
+TODO:
+- add Number getters
+- saving to file
+- add YAMLConfig getters
+*/
+
 public class YAMLConfig {
 
 	private final YAMLConfig parent;
