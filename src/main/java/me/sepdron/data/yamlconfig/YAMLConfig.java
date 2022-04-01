@@ -9,6 +9,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import me.sepdron.utils.CollectionUtils;
@@ -80,6 +81,47 @@ public class YAMLConfig {
 		} catch (IOException e) {
 			throw e;
 		}
+	}
+
+	@Override
+	public String toString() {
+		if (isMap) return mapToString();
+		return listToString();
+	}
+	private String mapToString() {
+		if (mapValues.size() == 0) return "{}";
+		StringBuilder sb = new StringBuilder();
+		for (Map.Entry<String, Object> item : mapValues.entrySet()) {
+			sb.append(item.getKey());
+			sb.append(": ");
+			String itemString = toYAMLString(item.getValue());
+			sb.append(itemString);
+			sb.append("\r\n");
+		}
+		sb.delete(sb.length()-2, sb.length());
+		return sb.toString();
+	}
+	private String listToString() {
+		if (listValues.size() == 0) return "[]";
+		StringBuilder sb = new StringBuilder();
+		for (Object item : listValues) {
+			sb.append("- ");
+			String itemString = toYAMLString(item);
+			sb.append(itemString);
+			sb.append("\r\n");
+		}
+		sb.delete(sb.length()-2, sb.length());
+		return sb.toString();
+	}
+	private String toYAMLString(Object o) {
+		if (o instanceof String) 
+			return "\"" + StringEscapeUtils.escapeJson((String) o) + "\"";
+		if (o instanceof YAMLConfig) return indent("\r\n" + o.toString());
+		if (o == null) return "null";
+		return o.toString();
+	}
+	private static String indent(String str) {
+		return str.replaceAll("\r\n", "\r\n  ");
 	}
 
 	public YAMLConfig getParent() {
