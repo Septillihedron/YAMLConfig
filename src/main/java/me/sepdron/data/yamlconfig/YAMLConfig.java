@@ -92,7 +92,8 @@ public class YAMLConfig {
 	}
 	public void save(File file) throws IOException {
 		try (var writer = new BufferedWriter(new FileWriter(file, Charset.forName("UTF-8")))) {
-			writer.write(toString());
+			writer.append(toString());
+			writer.append("\r\n");
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
