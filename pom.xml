@@ -30,6 +30,11 @@
       <artifactId>snakeyaml</artifactId>
       <version>1.30</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.9</version>
+    </dependency>
   	<dependency>
       <groupId>me.sepdron</groupId>
       <artifactId>utils</artifactId>
