@@ -1,11 +1,17 @@
 package me.sepdron.data.yamlconfig;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static java.util.Map.entry;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.FileSystems;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -23,6 +29,7 @@ public class YAMLConfigTest {
 
 	private YAMLConfig topConfig;
 	private YAMLConfig listConfig;
+	private YAMLConfig configListConfig;
 
 	private YAMLConfigTest() throws IOException {
 		File file = FileSystems.getDefault().getPath("data.yaml").toFile();
@@ -31,6 +38,7 @@ public class YAMLConfigTest {
 		System.out.println(topConfig);
 
 		listConfig = (YAMLConfig) topConfig.getObject("list");
+		configListConfig = topConfig.getConfig("configList");
 
 		saveConfig();
 	}
@@ -933,6 +941,181 @@ public class YAMLConfigTest {
 		assertThrows(exceptionClass, () -> listConfig.getBoolean(726, true)); // out of bounds
 	}
 
+	Map<String, Object> mapValues = 
+		mapOf(List.of(
+			entry("multiline1", "hsdga\nasdg\nhasdu\n"),
+			entry("multiline2", "sydga ansduas jausd\n"),
+			entry("string", "hasdt\\t\\s[]{}"),
+			entry("singleQuoteString", "sdfatsd\\n\\t\\e\\:[]"),
+			entry("doubleQouteString", "hbsgd\n\r\tshfda\r\n\"")
+		));
+	List<Object> listValues = 
+		listOf(new Object[] {
+			list_0,
+			list_1,
+			list_2,
+			list_3,
+			list_4,
+			list_5,
+			list_6,
+			list_7
+		});
+
+	@Test
+	void mapMapping_getConfig_String_Test() {
+		assertEquals(topConfig.getConfig("hyd"       ), null);
+		assertEquals(topConfig.getConfig("int"       ), null);
+		assertEquals(topConfig.getConfig("long"      ), null);
+		assertEquals(topConfig.getConfig("bigInteger"), null);
+		assertEquals(topConfig.getConfig("float"     ), null);
+		assertEquals(topConfig.getConfig("double"    ), null);
+		assertEquals(topConfig.getConfig("string"    ), null);
+		assertEquals(topConfig.getConfig("nul"       ), null);
+		assertEquals(topConfig.getConfig("boolean"   ), null);
+
+		YAMLConfig configMap = topConfig.getConfig("map");
+		assertIterableEquals(mapValues.entrySet(), configMap.getMapValues().entrySet());
+
+		YAMLConfig configList = topConfig.getConfig("list");
+		assertIterableEquals(listValues, configList.getListValues());
+	}
+	@Test
+	void mapMapping_getConfigOrDefault_String_int_Test() {
+		var def = new YAMLConfig(null, "", Map.of("a", "b"));
+		assertEquals(topConfig.getConfigOrDefault("hyd"       , def), def);
+		assertEquals(topConfig.getConfigOrDefault("int"       , def), def);
+		assertEquals(topConfig.getConfigOrDefault("long"      , def), def);
+		assertEquals(topConfig.getConfigOrDefault("bigInteger", def), def);
+		assertEquals(topConfig.getConfigOrDefault("float"     , def), def);
+		assertEquals(topConfig.getConfigOrDefault("double"    , def), def);
+		assertEquals(topConfig.getConfigOrDefault("string"    , def), def);
+		assertEquals(topConfig.getConfigOrDefault("nul"       , def), def);
+		assertEquals(topConfig.getConfigOrDefault("boolean"   , def), def);
+
+		YAMLConfig configMap = topConfig.getConfigOrDefault("map", def);
+		assertIterableEquals(mapValues.entrySet(), configMap.getMapValues().entrySet());
+
+		YAMLConfig configList = topConfig.getConfigOrDefault("list", def);
+		assertIterableEquals(listValues, configList.getListValues());
+	}
+	@Test
+	void mapMapping_getConfig_String_boolean_Test() {
+		assertEquals(topConfig.getConfig("hyd"       , false), null);
+		assertEquals(topConfig.getConfig("int"       , false), null);
+		assertEquals(topConfig.getConfig("long"      , false), null);
+		assertEquals(topConfig.getConfig("bigInteger", false), null);
+		assertEquals(topConfig.getConfig("float"     , false), null);
+		assertEquals(topConfig.getConfig("double"    , false), null);
+		assertEquals(topConfig.getConfig("string"    , false), null);
+		assertEquals(topConfig.getConfig("nul"       , false), null);
+		assertEquals(topConfig.getConfig("boolean"   , false), null);
+		{
+			YAMLConfig configMap = topConfig.getConfig("map", false);
+			assertIterableEquals(mapValues.entrySet(), configMap.getMapValues().entrySet());
+
+			YAMLConfig configList = topConfig.getConfig("list", false);
+			assertIterableEquals(listValues, configList.getListValues());
+		}
+		{
+			YAMLConfig configMap = topConfig.getConfig("map", true);
+			assertIterableEquals(mapValues.entrySet(), configMap.getMapValues().entrySet());
+
+			YAMLConfig configList = topConfig.getConfig("list", true);
+			assertIterableEquals(listValues, configList.getListValues());
+		}
+
+		Class<NoneOfTypeException> exceptionClass = NoneOfTypeException.class;
+		assertThrows(exceptionClass, () -> topConfig.getConfig("hyd"       , true));
+		assertThrows(exceptionClass, () -> topConfig.getConfig("int"       , true));
+		assertThrows(exceptionClass, () -> topConfig.getConfig("long"      , true));
+		assertThrows(exceptionClass, () -> topConfig.getConfig("bigInteger", true));
+		assertThrows(exceptionClass, () -> topConfig.getConfig("float"     , true));
+		assertThrows(exceptionClass, () -> topConfig.getConfig("double"    , true));
+		assertThrows(exceptionClass, () -> topConfig.getConfig("string"    , true));
+		assertThrows(exceptionClass, () -> topConfig.getConfig("nul"       , true));
+		assertThrows(exceptionClass, () -> topConfig.getConfig("boolean"   , true));
+	}
+
+	@Test
+	void listMapping_getConfig_String_Test() {
+		assertEquals(listConfig.getConfig(-19), null); // out of bounds
+		assertEquals(listConfig.getConfig(0  ), null); // int
+		assertEquals(listConfig.getConfig(1  ), null); // long
+		assertEquals(listConfig.getConfig(2  ), null); // bigInteger
+		assertEquals(listConfig.getConfig(3  ), null); // double
+		assertEquals(listConfig.getConfig(4  ), null); // double
+		assertEquals(listConfig.getConfig(5  ), null); // string
+		assertEquals(listConfig.getConfig(6  ), null); // null
+		assertEquals(listConfig.getConfig(7  ), null); // boolean
+		assertEquals(listConfig.getConfig(726), null); // out of bounds
+
+		YAMLConfig configMap = configListConfig.getConfig(0);  // map
+		assertIterableEquals(mapValues.entrySet(), configMap.getMapValues().entrySet());
+
+		YAMLConfig configList = configListConfig.getConfig(1); // list
+		assertIterableEquals(listValues, configList.getListValues());
+	}
+	@Test
+	void listMapping_getConfigOrDefault_String_int_Test() {
+		var def = new YAMLConfig(null, "", List.of("a", "b", "c"));
+		assertEquals(listConfig.getConfigOrDefault(-19, def), def); // out of bounds
+		assertEquals(listConfig.getConfigOrDefault(0  , def), def); // int
+		assertEquals(listConfig.getConfigOrDefault(1  , def), def); // long
+		assertEquals(listConfig.getConfigOrDefault(2  , def), def); // bigInteger
+		assertEquals(listConfig.getConfigOrDefault(3  , def), def); // double
+		assertEquals(listConfig.getConfigOrDefault(4  , def), def); // double
+		assertEquals(listConfig.getConfigOrDefault(5  , def), def); // string
+		assertEquals(listConfig.getConfigOrDefault(6  , def), def); // null
+		assertEquals(listConfig.getConfigOrDefault(7  , def), def); // boolean
+		assertEquals(listConfig.getConfigOrDefault(726, def), def); // out of bounds
+
+		YAMLConfig configMap = configListConfig.getConfigOrDefault(0, def);  // map
+		assertIterableEquals(mapValues.entrySet(), configMap.getMapValues().entrySet());
+
+		YAMLConfig configList = configListConfig.getConfigOrDefault(1, def); // list
+		assertIterableEquals(listValues, configList.getListValues());
+	}
+	@Test
+	void listMapping_getConfig_String_boolean_Test() {
+		assertEquals(listConfig.getConfig(-19, false), null); // out of bounds
+		assertEquals(listConfig.getConfig(0  , false), null); // int
+		assertEquals(listConfig.getConfig(1  , false), null); // long
+		assertEquals(listConfig.getConfig(2  , false), null); // bigInteger
+		assertEquals(listConfig.getConfig(3  , false), null); // double
+		assertEquals(listConfig.getConfig(4  , false), null); // double
+		assertEquals(listConfig.getConfig(5  , false), null); // string
+		assertEquals(listConfig.getConfig(6  , false), null); // null
+		assertEquals(listConfig.getConfig(7  , false), null); // boolean
+		assertEquals(listConfig.getConfig(726, false), null); // out of bounds
+
+		{
+			YAMLConfig configMap = configListConfig.getConfig(0, false);  // map
+			assertIterableEquals(mapValues.entrySet(), configMap.getMapValues().entrySet());
+
+			YAMLConfig configList = configListConfig.getConfig(1, false); // list
+			assertIterableEquals(listValues, configList.getListValues());
+		}
+		{
+			YAMLConfig configMap = configListConfig.getConfig(0, true);  // map
+			assertIterableEquals(mapValues.entrySet(), configMap.getMapValues().entrySet());
+
+			YAMLConfig configList = configListConfig.getConfig(1, true); // list
+			assertIterableEquals(listValues, configList.getListValues());
+		}
+
+		Class<NoneOfTypeException> exceptionClass = NoneOfTypeException.class;
+		assertThrows(exceptionClass, () -> listConfig.getConfig(-19, true)); // out of bounds
+		assertThrows(exceptionClass, () -> listConfig.getConfig(0  , true)); // int
+		assertThrows(exceptionClass, () -> listConfig.getConfig(1  , true)); // long
+		assertThrows(exceptionClass, () -> listConfig.getConfig(2  , true)); // bigInteger
+		assertThrows(exceptionClass, () -> listConfig.getConfig(3  , true)); // double
+		assertThrows(exceptionClass, () -> listConfig.getConfig(4  , true)); // double
+		assertThrows(exceptionClass, () -> listConfig.getConfig(5  , true)); // string
+		assertThrows(exceptionClass, () -> listConfig.getConfig(6  , true)); // null
+		assertThrows(exceptionClass, () -> listConfig.getConfig(7  , true)); // boolean
+		assertThrows(exceptionClass, () -> listConfig.getConfig(726, true)); // out of bounds
+	}
+
 	public static void assertThrowsException(Throwable exception, Executable executable) {
 		try {
 			executable.execute();
@@ -945,5 +1128,16 @@ public class YAMLConfigTest {
 			}
 		}
 	}
-
+	public <K,V> Map<K,V> mapOf(Iterable<Entry<K,V>> entries) {
+		var map = new LinkedHashMap<K,V>();
+		for (var entry : entries) {
+			map.put(entry.getKey(), entry.getValue());
+		}
+		return map;
+	}
+	public <T> List<T> listOf(T[] vals) {
+		List<T> list = new ArrayList<T>();
+		for (T val : vals) list.add(val);
+		return list;
+	}
 }

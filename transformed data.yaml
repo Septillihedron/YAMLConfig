@@ -21,3 +21,19 @@ list:
   - "systemOutPrintln()"
   - null
   - true
+configList: 
+  - 
+    multiline1: "hsdga\nasdg\nhasdu\n"
+    multiline2: "sydga ansduas jausd\n"
+    string: "hasdt\\t\\s[]{}"
+    singleQuoteString: "sdfatsd\\n\\t\\e\\:[]"
+    doubleQouteString: "hbsgd\n\r\tshfda\r\n\""
+  - 
+    - -121
+    - -1723612312127267231
+    - -1723612312127267231172361231212726723117236123121272672311723612312127267231172361231212726723117236123121272672311723612312127267231
+    - -10.32
+    - -9.731212732E-26
+    - "systemOutPrintln()"
+    - null
+    - true

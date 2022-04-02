@@ -457,4 +457,40 @@ public class YAMLConfig {
 		return false;
 	}
 
+	private boolean isConfig(Object o) {
+		return o instanceof YAMLConfig;
+	}
+	public YAMLConfig getConfig(String key) throws WrongMappingException {
+		Object o = getObject(key);
+		if (isConfig(o)) return (YAMLConfig) o;
+		return null;
+	}
+	public YAMLConfig getConfigOrDefault(String key, YAMLConfig defaultValue) throws WrongMappingException {
+		Object o = getObject(key);
+		if (isConfig(o)) return (YAMLConfig) o;
+		return defaultValue;
+	}
+	public YAMLConfig getConfig(String key, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(key, required);
+		if (isConfig(o)) return (YAMLConfig) o;
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(key), "YAMLConfig");
+		return null;
+	}
+	public YAMLConfig getConfig(int index) throws WrongMappingException {
+		Object o = getObject(index);
+		if (isConfig(o)) return (YAMLConfig) o;
+		return null;
+	}
+	public YAMLConfig getConfigOrDefault(int index, YAMLConfig defaultValue) throws WrongMappingException {
+		Object o = getObject(index);
+		if (isConfig(o)) return (YAMLConfig) o;
+		return defaultValue;
+	}
+	public YAMLConfig getConfig(int index, boolean required) throws WrongMappingException, NoneOfTypeException {
+		Object o = getObject(index, required);
+		if (isConfig(o)) return (YAMLConfig) o;
+		else if (required) throw NoneOfTypeException.createTypeException(getPathOf(index), "YAMLConfig");
+		return null;
+	}
+
 }
